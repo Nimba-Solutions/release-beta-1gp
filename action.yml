@@ -3,21 +3,36 @@ description: "Upload a 1GP managed beta package version"
 inputs:
   jwt-private-key:
     type: string
-    required: True
   connected-app-client-id:
     type: string
-    required: True
   username:
     type: string
-    required: True
   instance-url:
     type: string
-    required: True
+  org:
+    type: string
 runs:
   using: "composite"
   steps:
     - uses: actions/checkout@v2
     - name: "Run CumulusCI Flow: ci_master"
+      if: '${{ org }}
+      uses: cumulusci-actions/execute-cumulusci-flow@main
+      with:
+        org-name: packaging
+        flow-name: ci_master
+      env:
+        CUMULUSCI_ORG_packaging: '${{ inputs.org }}'
+    - name: "Run CumulusCI Flow: release_beta"
+      if: '${{ org }}
+      uses: cumulusci-actions/execute-cumulusci-flow@main
+      with:
+        org-name: packaging
+        flow-name: release_beta
+      env:
+        CUMULUSCI_ORG_packaging: '${{ inputs.org }}'
+    - name: "Run CumulusCI Flow: ci_master"
+      if: '${{ !org }}
       uses: cumulusci-actions/execute-cumulusci-flow@main
       with:
         org-name: packaging
@@ -27,6 +42,7 @@ runs:
         SFDX_CLIENT_ID: '${{ inputs.connected-app-client-id }}'
         SFDX_HUB_KEY: '${{ inputs.jwt-private-key }}'
     - name: "Run CumulusCI Flow: release_beta"
+      if: '${{ !org }}
       uses: cumulusci-actions/execute-cumulusci-flow@main
       with:
         org-name: packaging
