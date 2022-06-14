@@ -15,9 +15,10 @@ runs:
   using: "composite"
   steps:
     - uses: actions/checkout@v2
+    - uses: cumulusci-actions/setup-cumulus@main
     - name: "Run CumulusCI Flow: ci_master"
       if: '${{ inputs.org }}'
-      uses: cumulusci-actions/execute-cumulusci-flow@main
+      uses: cumulusci-actions/run-flow@main
       with:
         org-name: packaging
         flow-name: ci_master
@@ -25,7 +26,7 @@ runs:
         CUMULUSCI_ORG_packaging: '${{ inputs.org }}'
     - name: "Run CumulusCI Flow: release_beta"
       if: '${{ inputs.org }}'
-      uses: cumulusci-actions/execute-cumulusci-flow@main
+      uses: cumulusci-actions/run-flow@main
       with:
         org-name: packaging
         flow-name: release_beta
@@ -33,7 +34,7 @@ runs:
         CUMULUSCI_ORG_packaging: '${{ inputs.org }}'
     - name: "Run CumulusCI Flow: ci_master"
       if: '${{ !inputs.org }}'
-      uses: cumulusci-actions/execute-cumulusci-flow@main
+      uses: cumulusci-actions/run-flow@main
       with:
         org-name: packaging
         flow-name: ci_master
@@ -43,7 +44,7 @@ runs:
         SFDX_HUB_KEY: '${{ inputs.jwt-private-key }}'
     - name: "Run CumulusCI Flow: release_beta"
       if: '${{ !inputs.org }}'
-      uses: cumulusci-actions/execute-cumulusci-flow@main
+      uses: cumulusci-actions/run-flow@main
       with:
         org-name: packaging
         flow-name: release_beta
