@@ -16,7 +16,7 @@ runs:
   steps:
     - uses: actions/checkout@v2
     - name: "Run CumulusCI Flow: ci_master"
-      if: '${{ inputs.org }}
+      if: '${{ inputs.org }}'
       uses: cumulusci-actions/execute-cumulusci-flow@main
       with:
         org-name: packaging
@@ -24,7 +24,7 @@ runs:
       env:
         CUMULUSCI_ORG_packaging: '${{ inputs.org }}'
     - name: "Run CumulusCI Flow: release_beta"
-      if: '${{ inputs.org }}
+      if: '${{ inputs.org }}'
       uses: cumulusci-actions/execute-cumulusci-flow@main
       with:
         org-name: packaging
@@ -32,7 +32,7 @@ runs:
       env:
         CUMULUSCI_ORG_packaging: '${{ inputs.org }}'
     - name: "Run CumulusCI Flow: ci_master"
-      if: '${{ !inputs.org }}
+      if: '${{ !inputs.org }}'
       uses: cumulusci-actions/execute-cumulusci-flow@main
       with:
         org-name: packaging
@@ -42,7 +42,7 @@ runs:
         SFDX_CLIENT_ID: '${{ inputs.connected-app-client-id }}'
         SFDX_HUB_KEY: '${{ inputs.jwt-private-key }}'
     - name: "Run CumulusCI Flow: release_beta"
-      if: '${{ !inputs.org }}
+      if: '${{ !inputs.org }}'
       uses: cumulusci-actions/execute-cumulusci-flow@main
       with:
         org-name: packaging
