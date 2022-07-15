@@ -9,7 +9,7 @@ runs:
   steps:
     - uses: actions/checkout@v2
     - uses: cumulusci-actions/setup-cumulus@main
-    - uses: cumulusci-actions/authenticate-org@main
+    - uses: cumulusci-actions/authorize-org@main
       with:
           auth-url: '${{ inputs.packaging-auth-url }}'
           org-name: packaging
